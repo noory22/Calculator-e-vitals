@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>e-Vitals RPM Revenue Estimator | Remote Patient Monitoring</title>
   <meta name="description" content="Calculate your practice's potential RPM revenue. Estimate Medicare reimbursement for remote patient monitoring services.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,6 +16,10 @@
       --muted:#736C82; --line:#E4DCCD; --track:#E8DECF;
     }
     *{box-sizing:border-box;margin:0;padding:0}
+    html{
+      overflow-x:hidden;
+      -webkit-text-size-adjust:100%;
+    }
     body{
       font-family:'Mulish',sans-serif;
       background:var(--cream);
@@ -25,39 +29,15 @@
       padding:20px 16px 40px;
       line-height:1.5;
       min-height:100vh;
+      overflow-x:hidden;
+    }
+    input, button{
+      font:inherit;
+      min-width:0;
     }
     .wrap{
       width:100%;
       max-width:880px;
-    }
-
-    /* Mobile-first optimizations */
-    @media (max-width: 640px) {
-      body {
-        padding: 16px 12px 32px;
-      }
-      h1 {
-        font-size: 28px !important;
-      }
-      .panel {
-        padding: 18px !important;
-      }
-      .big .num {
-        font-size: 36px !important;
-      }
-      .row b {
-        font-size: 16px !important;
-      }
-      .scn {
-        padding: 10px 12px !important;
-      }
-      .scn b {
-        font-size: 13px;
-      }
-      .lead input, .lead button {
-        font-size: 14px !important;
-        padding: 10px 12px !important;
-      }
     }
 
     .head{
@@ -99,9 +79,9 @@
     h1{
       font-family:'Playfair Display',serif;
       font-weight:800;
-      font-size:34px;
+      font-size:clamp(30px, 5vw, 42px);
       line-height:1.1;
-      letter-spacing:-.01em;
+      letter-spacing:0;
     }
     h1 em{
       font-style:italic;
@@ -117,7 +97,7 @@
 
     .grid{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:repeat(2,minmax(0,1fr));
       gap:18px;
       margin-top:22px;
     }
@@ -130,9 +110,10 @@
     .panel{
       background:var(--card);
       border:1px solid var(--line);
-      border-radius:20px;
+      border-radius:8px;
       padding:24px;
       transition: box-shadow 0.2s;
+      min-width:0;
     }
     .panel:active{
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -204,6 +185,7 @@
       cursor:pointer;
       transition: all 0.15s ease;
       -webkit-tap-highlight-color: transparent;
+      min-width:0;
     }
     .scn:active{
       transform: scale(0.99);
@@ -236,6 +218,9 @@
     .scn b{
       font-size:14px;
     }
+    .scn > div:nth-child(2){
+      min-width:0;
+    }
     .scn span{
       display:block;
       font-size:12px;
@@ -247,6 +232,8 @@
       font-family:'Playfair Display',serif;
       font-weight:800;
       font-size:16px;
+      flex:0 0 auto;
+      white-space:nowrap;
     }
 
     .custom{
@@ -266,7 +253,7 @@
       display:flex;
       align-items:center;
       border:1.5px solid var(--line);
-      border-radius:12px;
+      border-radius:8px;
       padding:8px 11px;
       background: white;
     }
@@ -308,9 +295,9 @@
     .big .num{
       font-family:'Playfair Display',serif;
       font-weight:800;
-      font-size:46px;
+      font-size:clamp(38px, 7vw, 52px);
       line-height:1.05;
-      letter-spacing:-.5px;
+      letter-spacing:0;
       word-break:break-word;
     }
     .big .num small{
@@ -362,7 +349,7 @@
       text-align:center;
       padding:8px;
       background: rgba(31,27,64,0.7);
-      border-radius: 16px;
+      border-radius: 8px;
     }
     .locked.gated .gate{
       display:flex;
@@ -389,7 +376,7 @@
       border:1.5px solid rgba(255,255,255,.22);
       background:rgba(255,255,255,.08);
       color:#fff;
-      border-radius:12px;
+      border-radius:8px;
       padding:11px 12px;
       font-family:'Mulish';
       font-size:14px;
@@ -410,7 +397,7 @@
       grid-column:span 2;
       margin-top:2px;
       border:0;
-      border-radius:12px;
+      border-radius:8px;
       cursor:pointer;
       background:linear-gradient(105deg,var(--crimson),var(--crimson-deep));
       color:#fff;
@@ -470,6 +457,97 @@
     /* Touch improvements */
     button, .scn, input[type="range"] {
       touch-action: manipulation;
+    }
+
+    @media(max-width:640px){
+      body{
+        padding:14px 10px 28px;
+      }
+      .head{
+        align-items:flex-start;
+      }
+      .head svg{
+        width:38px;
+        height:38px;
+      }
+      .head .wm{
+        font-size:24px;
+      }
+      .kicker{
+        margin-top:16px;
+        font-size:11px;
+      }
+      .sub{
+        font-size:14px;
+      }
+      .grid{
+        gap:12px;
+        margin-top:18px;
+      }
+      .panel{
+        padding:18px;
+      }
+      .panel h2{
+        font-size:18px;
+      }
+      .field{
+        margin-bottom:16px;
+      }
+      .scn{
+        display:grid;
+        grid-template-columns:auto minmax(0,1fr) auto;
+        gap:9px;
+        padding:10px;
+      }
+      .scn b{
+        font-size:13px;
+      }
+      .scn span{
+        font-size:11.5px;
+      }
+      .lead .ff{
+        grid-template-columns:1fr;
+      }
+      .lead input,
+      .lead input.full,
+      .lead button,
+      .err{
+        grid-column:1;
+      }
+      .lead input,
+      .lead button{
+        padding:11px 12px;
+      }
+      .row{
+        align-items:flex-start;
+      }
+      .row b{
+        font-size:17px;
+      }
+      .note{
+        margin-top:18px;
+        font-size:11px;
+      }
+    }
+
+    @media(max-width:380px){
+      .panel{
+        padding:14px;
+      }
+      .scn{
+        grid-template-columns:auto minmax(0,1fr);
+      }
+      .scn .amt{
+        grid-column:2;
+        margin-left:0;
+      }
+      .big .num small{
+        display:block;
+        margin-top:2px;
+      }
+      .gate p{
+        font-size:13px;
+      }
     }
   </style>
 </head>
