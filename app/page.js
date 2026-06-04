@@ -47,7 +47,35 @@ export default function Home() {
     setIsSending(true);
 
     try {
-      const response = await fetch("/api/send-estimate", {
+      // 1. Send data to Google Sheets API
+      const saveLeadPromise = fetch("/api/save-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          practice: practice.trim(),
+          email: email.trim(),
+          patients,
+          enrollmentRate: `${rate}%`,
+          enrolled,
+          standard: pm === "custom" ? `Custom ($${customRate}/mo)` : `$${pm}/mo`,
+          annualRevenue: formatNumber(annualRevenue),
+          setupRevenue: formatNumber(setupRevenue),
+          yearOneTotal: formatNumber(yearOneTotal),
+        }),
+      }).then(async (res) => {
+        const d = await res.json();
+        if (!res.ok || !d.success) {
+          console.warn("Google Sheets capture skipped/failed:", d.error || "Unknown error");
+        }
+        return d;
+      }).catch((err) => {
+        console.error("Google Sheets request failed:", err);
+        return { success: false, error: err.message };
+      });
+
+      // 2. Send detailed estimate email
+      const sendEstimatePromise = fetch("/api/send-estimate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -65,8 +93,10 @@ export default function Home() {
         }),
       });
 
-      const data = await response.json();
-      if (response.ok && data.success) {
+      const [, emailResponse] = await Promise.all([saveLeadPromise, sendEstimatePromise]);
+
+      const data = await emailResponse.json();
+      if (emailResponse.ok && data.success) {
         setIsSuccess(true);
         setIsGated(false);
         if (data.previewUrl) {

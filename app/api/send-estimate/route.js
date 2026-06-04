@@ -86,7 +86,7 @@ export async function POST(request) {
     const emailHtml = `
       <div style="font-family: Arial, sans-serif; background-color: #F6F1E8; padding: 30px; color: #221C30; max-width: 600px; margin: 0 auto; border-radius: 12px; border: 1px solid #E4DCCD;">
         <div style="text-align: center; margin-bottom: 20px;">
-          <h2 style="color: #1F1B40; font-size: 24px; margin-bottom: 5px; font-family: Georgia, serif;">e-Vitals RPM Estimator</h2>
+          <h2 style="color: #1F1B40; font-size: 24px; margin-bottom: 5px; font-family: Georgia, serif;">e-Vitals RPM</h2>
           <span style="color: #BE1E2D; font-weight: 800; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;">Revenue Estimate Breakdown</span>
         </div>
         
@@ -146,7 +146,7 @@ export async function POST(request) {
     `;
 
     // Configure the sender address
-    const fromSender = isDemo ? `"e-Vitals Demo" <${testAccountInfo.user}>` : `"e-Vitals Estimator" <${fromEmail}>`;
+    const fromSender = isDemo ? `"e-Vitals Demo" <${testAccountInfo.user}>` : `"e-Vitals" <${fromEmail}>`;
 
     const mailOptions = {
       from: fromSender,
