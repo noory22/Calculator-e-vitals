@@ -58,9 +58,50 @@ body {
   .scn b {
     font-size: 13px;
   }
+  .lead .ff {
+    grid-template-columns: 1fr !important;
+  }
   .lead input, .lead button {
+    grid-column: span 1 !important;
     font-size: 14px !important;
     padding: 10px 12px !important;
+  }
+  .err {
+    grid-column: span 1 !important;
+  }
+}
+
+@media (max-width: 400px) {
+  body {
+    padding: 12px 8px 24px;
+  }
+  h1 {
+    font-size: 23px !important;
+  }
+  .panel {
+    padding: 14px !important;
+  }
+  .big .num {
+    font-size: 30px !important;
+  }
+  .big .num small {
+    font-size: 14px !important;
+  }
+  .scn {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+  }
+  .scn b {
+    font-size: 12px !important;
+  }
+  .scn span {
+    font-size: 11px !important;
+  }
+  .scn .amt {
+    font-size: 14px !important;
+  }
+  .lead button {
+    font-size: 13px !important;
   }
 }
 
@@ -133,7 +174,7 @@ h1 em {
   margin-top: 22px;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
     gap: 16px;
