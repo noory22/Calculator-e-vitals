@@ -13,6 +13,7 @@ export default function Home() {
   // Gating & Form Submission States
   const [name, setName] = useState("");
   const [practice, setPractice] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [formErr, setFormErr] = useState("");
   const [isSending, setIsSending] = useState(false);
@@ -35,8 +36,8 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-    if (!name.trim() || !emailPattern.test(email.trim())) {
-      setFormErr("Please enter your name and a valid email address.");
+    if (!name.trim() || !emailPattern.test(email.trim()) || !phone.trim()) {
+      setFormErr("Please enter your name, a valid email address, and a phone number.");
       setTimeout(() => {
         setFormErr("");
       }, 3000);
@@ -54,6 +55,7 @@ export default function Home() {
         body: JSON.stringify({
           name: name.trim(),
           practice: practice.trim(),
+          phone: phone.trim(),
           email: email.trim(),
           patients,
           enrollmentRate: `${rate}%`,
@@ -82,6 +84,7 @@ export default function Home() {
           name: name.trim(),
           email: email.trim(),
           practice: practice.trim(),
+          phone: phone.trim(),
           patients,
           rate,
           billingScenario: pm === "custom" ? `Custom ($${customRate}/mo)` : `$${pm}/mo`,
@@ -115,29 +118,12 @@ export default function Home() {
   return (
     <div className="wrap">
       {/* Header */}
-      <div className="head">
-        <svg viewBox="0 0 64 64">
-          <path
-            d="M32 55 C 12 41, 6 28, 12 19 C 17 11, 28 12, 32 21 C 36 12, 47 11, 52 19 C 58 28, 52 41, 32 55 Z"
-            fill="none"
-            stroke="#BE1E2D"
-            strokeWidth="3.4"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M16 34 H25 l3 -7 4 14 3 -9 2 4 h11"
-            fill="none"
-            stroke="#BE1E2D"
-            strokeWidth="2.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <circle cx="14" cy="46" r="3" fill="#BE1E2D" />
-          <circle cx="22" cy="52" r="2.2" fill="#BE1E2D" />
-        </svg>
-        <div className="wm">
-          e-Vitals<small>Remote Patient Monitoring</small>
-        </div>
+      <div className="head" style={{ marginBottom: "16px" }}>
+        <img
+          src="/e-vitals.webp"
+          alt="e-Vitals Remote Patient Monitoring"
+          style={{ height: "50px", width: "auto", mixBlendMode: "multiply" }}
+        />
       </div>
 
       <div className="kicker">60-Second Estimate</div>
@@ -334,6 +320,15 @@ export default function Home() {
                   onChange={(e) => setPractice(e.target.value)}
                 />
                 <input
+                  id="fPhone"
+                  type="tel"
+                  placeholder="Phone number"
+                  autoComplete="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+                <input
+                  className="full"
                   id="fEmail"
                   type="email"
                   placeholder="Work email"
@@ -358,6 +353,16 @@ export default function Home() {
                   A specialist will reach out to schedule your 15-minute demo. Check your inbox for the detailed
                   breakdown.
                 </p>
+                <div style={{ marginTop: "18px" }}>
+                  <a
+                    href="https://calendly.com/evitalsrpm/30min"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="book-btn"
+                  >
+                    📅 Book an appointment
+                  </a>
+                </div>
                 {previewUrl && (
                   <div style={{ marginTop: "16px" }}>
                     <a

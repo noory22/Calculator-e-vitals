@@ -573,3 +573,29 @@ input[type=range]::-moz-range-thumb {
 button, .scn, input[type="range"] {
   touch-action: manipulation;
 }
+
+.book-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: linear-gradient(105deg, var(--crimson), var(--crimson-deep));
+  color: #fff;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: .02em;
+  box-shadow: 0 4px 12px rgba(190, 30, 45, 0.3);
+  transition: transform 0.1s, opacity 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.book-btn:hover {
+  opacity: 0.95;
+  box-shadow: 0 6px 16px rgba(190, 30, 45, 0.4);
+}
+
+.book-btn:active {
+  transform: scale(0.98);
+}
+

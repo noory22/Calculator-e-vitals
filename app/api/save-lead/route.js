@@ -7,6 +7,7 @@ export async function POST(request) {
     const {
       name,
       practice,
+      phone,
       email,
       patients,
       enrollmentRate,
@@ -52,7 +53,7 @@ export async function POST(request) {
 
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: "Sheet1!A:K",
+      range: "Sheet1!A:L",
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values: [
@@ -60,6 +61,7 @@ export async function POST(request) {
             new Date().toLocaleString("en-US"),
             name || "",
             practice || "",
+            phone || "",
             email || "",
             patients || 0,
             enrollmentRate || "",

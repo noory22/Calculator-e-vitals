@@ -12,6 +12,7 @@ export async function POST(request) {
       name,
       email,
       practice,
+      phone,
       patients,
       rate,
       billingScenario,
@@ -135,6 +136,12 @@ export async function POST(request) {
               <td style="padding: 15px 0 0 0; text-align: right; font-weight: bold; font-size: 18px; color: #BE1E2D;">${formatCurrency(yearOneTotal)}</td>
             </tr>
           </table>
+        </div>
+
+        <div style="text-align: center; margin-top: 25px; margin-bottom: 5px;">
+          <a href="https://calendly.com/evitalsrpm/30min" target="_blank" style="display: inline-block; padding: 14px 28px; background-color: #BE1E2D; color: #FFFFFF; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 15px; box-shadow: 0 4px 10px rgba(190,30,45,0.2);">
+            📅 Book an Appointment
+          </a>
         </div>
 
         <div style="text-align: center; margin-top: 25px; font-size: 11px; color: #736C82; line-height: 1.5;">
