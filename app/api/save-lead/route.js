@@ -75,6 +75,71 @@ export async function POST(request) {
       },
     });
 
+    // Automatically check and apply formatting (banding & row height) to the Google Sheet
+    try {
+      const spreadsheetInfo = await sheets.spreadsheets.get({
+        spreadsheetId,
+      });
+      const sheet = spreadsheetInfo.data.sheets.find(s => s.properties.title === "Sheet1") || spreadsheetInfo.data.sheets[0];
+      const sheetId = sheet.properties.sheetId;
+      const rowCount = sheet.properties.gridProperties?.rowCount || 1000;
+
+      const requests = [
+        {
+          updateDimensionProperties: {
+            range: {
+              sheetId: sheetId,
+              dimension: "ROWS",
+              startIndex: 1, // Row 2 (0-indexed)
+              endIndex: rowCount,
+            },
+            properties: {
+              pixelSize: 30, // Increase row height to 30px for better visibility
+            },
+            fields: "pixelSize",
+          },
+        },
+      ];
+
+      const hasBanding = sheet.bandedRanges && sheet.bandedRanges.length > 0;
+
+      if (!hasBanding) {
+        requests.push({
+          addBanding: {
+            bandedRange: {
+              range: {
+                sheetId: sheetId,
+                startRowIndex: 1, // Row 2 (0-indexed, below header)
+                startColumnIndex: 0,
+                endColumnIndex: 12, // Columns A to L
+              },
+              rowProperties: {
+                firstBandColor: {
+                  red: 1.0,
+                  green: 1.0,
+                  blue: 1.0,
+                },
+                secondBandColor: {
+                  red: 0.2588,
+                  green: 0.5686,
+                  blue: 0.8471,
+                },
+              },
+            },
+          },
+        });
+      }
+
+      await sheets.spreadsheets.batchUpdate({
+        spreadsheetId,
+        requestBody: {
+          requests,
+        },
+      });
+    } catch (formattingError) {
+      console.warn("Could not apply formatting (banding/height) to Google Sheet:", formattingError);
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Google Sheets error:", error);
